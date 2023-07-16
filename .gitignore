@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+.DS_Store
+
 # Distribution / packaging
 .Python
 build/
@@ -23,6 +25,8 @@ wheels/
 pip-wheel-metadata/
 share/python-wheels/
 *.egg-info/
+py37/
+tello/
 .installed.cfg
 *.egg
 MANIFEST

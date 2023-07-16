@@ -5,8 +5,6 @@ mp_face_keypoint = mp.solutions.face_detection
 mp_face_process = mp_face_detection.process
 mp_drawing = mp.solutions.drawing_utils
 
-# For static images:
-IMAGE_FILES = ['.보나.jpeg']
 image = cv2.imread('./보나.jpeg')
 
 img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -19,4 +17,4 @@ for detection in results.detections:
     print(mp_face_keypoint.get_key_point(
         detection, mp_face_keypoint.FaceKeyPoint.NOSE_TIP))
     mp_drawing.draw_detection(annotated_image, detection)
-cv2.imwrite('./hi.jpeg',annotated_image)
+cv2.imwrite('./ho.jpeg',annotated_image)
