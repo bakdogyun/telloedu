@@ -7,7 +7,7 @@ import cvzone.HandTrackingModule as hand
 
 color = (255,255,0)
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 detector = hand.HandDetector(detectionCon=0.8, maxHands=2)
 
 # 손가락의 top index

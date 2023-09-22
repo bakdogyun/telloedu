@@ -1,15 +1,5 @@
-"""
-Tello Drone의 전송 영상에 얼굴 탐지 및 트래킹
-- CVZONE_FACE_DETECT를 사용
-- send_rc_control()로 x,y,z방향으로 이동
-
-<참고>
-https://github.com/hsgucci404/tello/blob/master/Tello_CV_face/main.py
-"""
-
 from djitellopy import Tello
 from cvzone.FaceDetectionModule import FaceDetector 
-import numpy as np
 import cv2, time
 
 color = (255,255,0)
@@ -28,13 +18,8 @@ detector = FaceDetector()
 # 영상전송 모드 ON
 tello.streamon()
 
-# Tello Drone에서 이미지 캡처를 위한 Thread 구동
-#tello.set_video_fps(Tello.FPS_15)
 frame_read = tello.get_frame_read()
 
-# 배터리와 이미지 기본 정보 표시
-print("batter_status = ", tello.get_battery())
-print(frame_read.frame.shape)
 
 # 시간측정(15초 전에 명령어 전송)
 current_time = time.time()	
@@ -69,19 +54,10 @@ try:
             img = cv2.rectangle(img, bbox, color, 2)
             cv2.circle(img, center, 5, color, cv2.FILLED)
 
-            # 화면의 중심에서 얼굴의 중심점까지 선그리기
-            cv2.line(img,(0,cy),(width,cy), color2, 1) # x축
-            cv2.line(img,(cx,0),(cx,height),color2, 1) # y축
-            #cv2.line(img,(cx,cy) ,center, color,2)
 
             # 얼굴탐지 사각형영역의 코위치에서 이미지의 가운데까지의 픽셀차이
             dx = fcx - cx
             dy = fcy - cy
-
-            # 얼굴영역의 width pixel수 표시
-            cv2.putText(img, f'{bbox[3]}px',
-                                    (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_PLAIN,
-                                    2, color, 2)
 
             if flag_face_detect:
                 # x,y,z축 상에서 이동 거리와 속도 계산
@@ -93,8 +69,6 @@ try:
                 dw = 0.7 * (100 - fw)  # 기준 얼굴 크기 100px와의 차이
 
                 dx = -dx # 제어 방향이 반대였기 때문에 -1을 곱하여 반대
-
-                print('dx=%f  dy=%f  dw=%f'%(dx, dy, dw) )
 
                 # 좌/우방향의 미작동 구간 설정(20cm)
                 d = 0.0 if abs(dx) < 20.0 else dx  
@@ -111,12 +85,10 @@ try:
                 c =  100 if c >  100.0 else c
                 c = -100 if c < -100.0 else c
                 
-                print("send_rc >> (LR=%s,FB=%s,UD=%s,YY=%s)"%(int(a), int(b), int(c), int(d)))
-                # RC명령어 전송
+              
                 tello.send_rc_control(int(a), int(b), int(c), int(d))
 
-        if flag_face_detect:
-            cv2.putText(img, f"ON", (20,30), cv2.FONT_HERSHEY_PLAIN, 2, color, 2)
+
 
         cv2.imshow("Tello Face Tracking", img)
 

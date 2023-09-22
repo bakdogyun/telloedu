@@ -1,12 +1,7 @@
-"""
-노트북/PC카메라로부터 얼굴 영역 탐지
-- 탐지된 얼굴 인식율과 영역, 얼굴영역의 중심점 표시
-"""
-
 from cvzone.FaceDetectionModule import FaceDetector 
-import cv2 
+import cv2
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 detector = FaceDetector() 
 
 if not cap.isOpened(): 

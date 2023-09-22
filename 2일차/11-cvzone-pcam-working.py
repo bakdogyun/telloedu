@@ -1,11 +1,6 @@
-"""
-노트북/PC카메라의 동작 점검
-- 카메라로부터 이미지 스트림 전송 여부 확인
-"""
-
 import cv2 
 
-cap = cv2.VideoCapture(0) 
+cap = cv2.VideoCapture(1) 
 
 if not cap.isOpened(): 
     print("camera open failed") 
